@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from instagram.users import models as user_models
+from django.contrib.humanize.templatetags.humanize import naturaltime
+from taggit.managers import TaggableManager
 
 
 @python_2_unicode_compatible
@@ -22,6 +24,7 @@ class Image(TimeStampedModel):
     location = models.CharField(max_length=140)
     caption = models.TextField()
     creator = models.ForeignKey(user_models.User, null=True, on_delete=models.PROTECT,related_name='images')
+    tags = TaggableManager()
 
     @property
     def like_count(self):
